@@ -2,19 +2,20 @@ package date;
 
 public class Date {
 
-    private static int month = 0;
-    private static int day = 0;
-    private static int year = 0;
+    public static int month = 4;
+    public static int day = 9;
+    public static int year = 1972;
     private static final String[] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 
     public Date() {
-        this(0, 1, 1);
+
     }
 
     public Date(Date dt) {
         this();
     }
 
+    
     public Date(int dn, int y) {
         int m = dn/12;
         int d = dn/30;
@@ -22,42 +23,51 @@ public class Date {
         setDate(m, d, y);
     }
 
+    
     public Date(int m, int d, int y) {
         setDate(m, d, y);
     }
 
+    
     public Date(String m, int d, int y) {
         setDate(monthToInt(m), d, y);
     }
 
+    
     public static void getDate() {
         getMonth();
         getDay();
         getYear();
     }
 
+    
     public static int getMonth() {
         return month;
     }
 
+    
     public static int getDay() {
         return day;
     }
 
+    
     public static int getYear() {
         return year;
     }
 
+    
     private void setDate(int m, int d, int y) {
         setYear(y);
         setMonth(m);
         setDay(d);
     }
 
+    
     public static void setMonth(int m) {
         if (m < 12 && m > 0 ) month = m; else printErr();
     }
 
+    
     public static void setDay(int d) { //check the months with 30 days.
         if ( month == 3 || month == 5 || month == 8 || month == 10 ) {
             if (d <= 30 && d > 0 ) day = d; 
@@ -72,41 +82,30 @@ public class Date {
         }
     }
 
+    
     public static void setYear(int y) {
         if (y < 2500 && y > 0 ) year = y; else printErr();
     }
-
-    public static void main(String[] args) {
-
-        Date date = new Date();
-        Date dt = new Date(date);
-
-        int m = 11;
-        int d = 22;
-        int y = 2011;
-
-        dt.setDate(m, d, y);
-
-        System.out.println(" dt.getDay() -> " + dt.getDay());
-        System.out.println(" day -> " + day);
-    }
-
+  
     
     private static void printErr() {
         System.out.println("Error with input: " + months[month] + " / " + day + " / " + year);
     }
     
+    
     private static void printErr(String e) {
         System.out.println("Unknown month spelling : " + e + ". Valid format is June or Jun ");
     }
     
+    
     private static boolean isLeapYear() {
-        if ( year %4 == 0){ //basic premise
+        if ( year %4 == 0){ //basic premise, check gregorian rules
             if ( year % 100 == 0 && year%400 == 0) return true;
             else if (year % 100 == 0) return false;
             else return true;
         } else return false;
     }
+ 
     
     private static int monthToInt(String m) {
         int monthInt = 0;                       //strip whitespace and
@@ -138,6 +137,7 @@ public class Date {
             } 
             return monthInt;
         }
+
     
     // make the user input to lower case then upper case only the first letter
     private static String fixMonthSpelling(String str){
@@ -147,5 +147,8 @@ public class Date {
         String fixedMonth = new String(monthArray);
         return fixedMonth;
     }
+ 
+    
+
     
 }
