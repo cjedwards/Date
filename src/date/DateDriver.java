@@ -4,8 +4,6 @@ import javax.swing.JOptionPane;
 
 public class DateDriver {
     
-    private static int inpD, inpY;
-    
 	static Date dt = new Date();
 	
     public static boolean isInteger( String inp )  {  
@@ -28,21 +26,29 @@ public class DateDriver {
 	}
         
 	public static boolean getInput() {
-		String inp = new String();
+
+		String inp, inpM;
+		int inpD, inpY, inpDiY;
 		
-        String inpM = JOptionPane.showInputDialog("Enter month name or number. eg January, Jan, 1");
-		if (inpM == null || inpM.isEmpty()) {	Err.print(inpM); return false; }
-
-		inp = (JOptionPane.showInputDialog("Enter day number. eg (22)"));
-		if (isInteger(inp)) { inpD = Integer.valueOf(inp); } else { Err.print(inp); return false; }
-
-		inp = (JOptionPane.showInputDialog("Enter year number. eg (2002)"));
+		inp = (JOptionPane.showInputDialog("Enter year eg. (2002)"));
 		if (isInteger(inp)) { inpY = Integer.valueOf(inp); } else { Err.print(inp); return false; } 
 
-        if (isInteger(inpM)) {    // info pre-validated, decide what object to create
-            dt = new Date(Integer.valueOf(inpM), inpD, inpY);
-        }  else {
-            dt = new Date(inpM, inpD, inpY);
+		inp = JOptionPane.showInputDialog("(OPTIONAL:) Enter day number in year, eg. 35 , meaning Feb 4th");
+		if (isInteger(inp)) { 
+			inpDiY = Integer.valueOf(inp); 
+			dt = new Date(inpDiY, inpY);
+			return true;
+		} 
+		inpM = JOptionPane.showInputDialog("Enter month name or number. eg January or Jan or 1.");
+		if (inpM == null || inpM.isEmpty()) {	Err.print(inpM); return false; }
+
+		inp = (JOptionPane.showInputDialog("Enter day of month eg. (22)"));
+		if (isInteger(inp)) { inpD = Integer.valueOf(inp); } else { Err.print(inp); return false; }
+
+		if (isInteger(inpM)) {    // info pre-validated, decide what object to create
+			dt = new Date(Integer.valueOf(inpM), inpD, inpY);
+		}  else {
+			dt = new Date(inpM, inpD, inpY);
 		}
         return true;
     }
@@ -52,13 +58,13 @@ public class DateDriver {
         Object selectedValue = JOptionPane.showInputDialog(null,"Choose one", "Output Style",JOptionPane.INFORMATION_MESSAGE, null,outTypes, outTypes[0]);
 
         if (selectedValue == "MM/DD/YY"){
-                JOptionPane.showMessageDialog(null, dt.month + "/" + dt.day + "/" + dt.year);
+                JOptionPane.showMessageDialog(null, dt.getMonth() + "/" + dt.getDay() + "/" + dt.getYear());
         } else if ( selectedValue == "May 9, 1972") {
-                JOptionPane.showMessageDialog(null, dt.months[dt.month-1] + " " + dt.day + ", " + dt.year);
+                JOptionPane.showMessageDialog(null, dt.months[dt.getMonth()-1] + " " + dt.getDay() + ", " + dt.getYear());
         } else if ( selectedValue == "DDD YYYY") {
-                JOptionPane.showMessageDialog(null, "");
+                JOptionPane.showMessageDialog(null, dt.getDayCount() + " " + dt.getYear());
         } else {
-                JOptionPane.showMessageDialog(null, "");
+                JOptionPane.showMessageDialog(null, "error in showMessageDialog");
         }
 
     }
